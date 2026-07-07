@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  php:
+    image: php:5-fpm-alpine
+    volumes:
+      - ./html:/var/www/html
+
+  web:
+    build:
+      context: ./docker/web
+    depends_on:
+      - php
+    ports:
+      - "80:80"
+    volumes:
+      - ./html:/var/www/html:ro

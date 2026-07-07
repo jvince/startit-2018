@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Window</title>
+	<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.0/normalize.css" />
+	<link rel="stylesheet" href="https://unpkg.com/picnic">
+</head>
+<body>
+	<input class="button" id="open-window" type="button" value="Open window" />
+	<input class="button error" id="close-window" type="button" value="Close window" />
+	<input class="button warning" id="add-content" type="button" value="Add content" />
+
+	<script>
+		;(function () {
+			var openedWindow = null;
+
+			function checkWindow() {
+				if (openedWindow === null) {
+					alert('No, no. No window here.');
+					return false;
+				}
+				return true;
+			}
+
+			function onWindowUnload() {
+				openedWindow.removeEventListener('unload', onWindowUnload);
+				openedWindow = null;
+			}
+
+			document.getElementById('open-window')
+			.addEventListener('click', function () {
+				openedWindow = window.open(
+					'', // URL ili prazan string za prazan prozor
+					'new_window', // Naziv prozora, ako se ne navede uvek otvara novi prozor
+					'resizable=0,width=320,height=240' // Karakteristike https://developer.mozilla.org/en-US/docs/Web/API/Window/open#Window_features
+				);
+				openedWindow.document.title = 'New Window';
+				openedWindow.addEventListener('unload', onWindowUnload);
+			});
+
+			document.getElementById('close-window')
+			.addEventListener('click', function () {
+				if (checkWindow()) {
+					openedWindow.close();
+				}
+			});
+
+			document.getElementById('add-content')
+			.addEventListener('click', function () {
+				if (checkWindow()) {
+					openedWindow.document.body.innerHTML =
+						'Window with title: <strong>' +
+						openedWindow.opener.document.title +
+						'</strong> opened me!';
+					openedWindow.focus();
+				}
+			});
+		})();
+	</script>
+</body>
+</html>

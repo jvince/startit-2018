@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Event Delegation</title>
+	<style>
+		li:hover {
+			background-color: #00ff00;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<input id="add" type="button" value="+5" />
+	<ul id="list">
+		<li data-id="1">list item 1</li>
+		<li data-id="2">list item 2</li>
+		<li data-id="3">list item 3</li>
+		<li data-id="4">list item 4</li>
+		<li data-id="5">list item 5</li>
+	</ul>
+	<script>
+		;(function () {
+			var ITEMS_TO_ADD = 5;
+
+			var $add = document.getElementById('add');
+			var $list = document.getElementById('list');
+
+			function findLastId() {
+				var $els = $list.children;
+				return parseInt(
+					$els[$els.length - 1].getAttribute('data-id')
+				) + 1;
+			}
+
+			$add.addEventListener('click', function () {
+				var start = findLastId();
+				var end = start + ITEMS_TO_ADD;
+
+				while (start < end) {
+					var $listItem = document.createElement('LI');
+					$listItem.innerText = 'list item ' + start;
+					$listItem.setAttribute('data-id', start);
+					$list.appendChild($listItem);
+					start++;
+				}
+			});
+
+			$list.addEventListener('click', function (e) {
+				console.log(e.target);
+				if (e.target && e.target.nodeName === 'LI') {
+					var elId = e.target.getAttribute('data-id');
+					alert('Element id: ' + elId);
+				}
+			});
+		})();
+	</script>
+</body>
+</html>

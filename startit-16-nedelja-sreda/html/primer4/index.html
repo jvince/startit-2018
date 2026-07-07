@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>jQuery obilazak DOM stabla</title>
+	<style>
+		.highlight {
+			background-color: #ffff00;
+		}
+		.frame {
+			border: 2px solid green
+		};
+	</style>
+</head>
+<body>
+	<section id="section-1">
+		<h1>parent</h1>
+		<p>This is a <em>simple paragraph</em>.</p>
+		<ul>
+			<li>Item 1</li>
+			<li>Item 2</li>
+		</ul>
+	</section>
+
+	<section id="section-2">
+			<h1>children</h1>
+			<p>This is a <em>simple paragraph</em>.</p>
+			<ul>
+				<li>Item 1</li>
+				<li>Item 2</li>
+			</ul>
+		</section>
+
+	<section id="section-3">
+		<h1>parents/parentUntil</h1>
+		<p>This is a <em>simple paragraph</em>.</p>
+		<ul>
+			<li>Item One</li>
+			<li>Item Two</li>
+		</ul>
+	</section>
+
+	<section id="section-4">
+		<h1>find</h1>
+		<p>This is a <em>simple paragraph</em>.</p>
+		<ul>
+			<li>Item One</li>
+			<li>Item Two</li>
+		</ul>
+	</section>
+
+	<section id="section-5">
+		<h1>siblings</h1>
+		<ul>
+			<li>One</li>
+			<li>Two</li>
+			<li class="highlight">Three</li>
+			<li>Four</li>
+		</ul>
+
+		<ul>
+			<li>Five</li>
+			<li class="middle">Six</li>
+			<li>Seven</li>
+		</ul>
+
+		<ul>
+			<li>Eight</li>
+			<li class="highlight">Nine</li>
+			<li>Ten</li>
+			<li class="highlight">Eleven</li>
+		</ul>
+	</section>
+
+	<section id="section-6">
+			<h1>prev/next</h1>
+			<ul>
+				<li>One</li>
+				<li>Two</li>
+				<li class="prev-all">Three</li>
+				<li>Four</li>
+			</ul>
+
+			<ul>
+				<li>Five</li>
+				<li class="middle">Six</li>
+				<li>Seven</li>
+			</ul>
+
+			<ul>
+				<li>Eight</li>
+				<li class="next-all">Nine</li>
+				<li>Ten</li>
+				<li>Eleven</li>
+			</ul>
+		</section>
+
+	<script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+	<script>
+		$(function () {
+			$('#section-1 li').parent().addClass('highlight');
+
+			$('#section-2 ul').children().addClass('highlight');
+
+			// $('#section-3 li').parents().addClass('frame');
+			// $('#section-3 li').parents('section, ul').addClass('frame');
+			$('#section-3 li').parentsUntil('body').addClass('frame');
+
+			$('#section-4').find('li').addClass('frame');
+
+			$('#section-5 .highlight').siblings().css('background-color', 'orange');
+			$('#section-5 li').siblings('.middle').css('background-color', 'red');
+
+			$('#section-6 .prev-all').prevAll().css('background-color', 'green');
+			$('#section-6 .next-all').nextAll().css('background-color', 'blue');
+
+			$('#section-6 .middle').prev().css('background-color', 'green');
+			$('#section-6 .middle').next().css('background-color', 'blue');
+		});
+	</script>
+</body>
+</html>

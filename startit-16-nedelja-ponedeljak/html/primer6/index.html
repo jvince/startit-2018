@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Movie Interactive Details</title>
+	<link href="https://necolas.github.io/normalize.css/8.0.0/normalize.css" rel="stylesheet">
+	<link href="style.css" rel="stylesheet">
+</head>
+<body>
+	<script id="movie-template" type="x-tmpl-mustache">
+		<div
+			class="movie-card-inner"
+			style="background-image: url({{posterUrl}})"
+			data-movie-id="{{id}}">
+		</div>
+	</script>
+
+	<div id="movie" class="card movie-card" draggable="true"></div>
+
+	<div class="card details-card">
+		<h2>Details</h2>
+		<div id="details" class="details-card-target"></div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://unpkg.com/mustache@2.3.0/mustache.min.js"></script>
+	<script src="index.js"></script>
+	<script>
+		App.start();
+	</script>
+</body>
+</html>

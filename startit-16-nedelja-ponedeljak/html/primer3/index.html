@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Event - Capture</title>
+	<style>
+		.box {
+			box-sizing: border-box;
+			position: absolute;
+			border: 1px solid #000;
+		}
+		#outter {
+			position: relative;
+			width: 240px;
+			height: 240px;
+		}
+		#middle {
+			top: calc(50% - 100px);
+			left: calc(50% - 100px);
+			width: 200px;
+			height: 200px;
+		}
+		#inner {
+			top: calc(50% - 80px);
+			left: calc(50% - 80px);
+			width: 160px;
+			height: 160px;
+		}
+		#status {
+			position: fixed;
+			top: 0;
+			right: 0;
+			width: 320px;
+			height: 100vh;
+			background-color: #ccc;
+		}
+	</style>
+</head>
+<body>
+	<h1>Capture</h1>
+	<div>
+		<input id="stop-propagation" type="checkbox" />
+		<label for="stop-propagation">Stop propagation</label>
+	</div>
+
+	<div id="outter" class="box">
+		<div id="middle" class="box">
+			<div id="inner" class="box"></div>
+		</div>
+	</div>
+	<div id="status"></div>
+
+	<script>
+		;(function () {
+			var USE_CAPTURE = true;
+
+			var $stopPropagation = document.getElementById('stop-propagation');
+			var $outter = document.getElementById('outter');
+			var $middle = document.getElementById('middle');
+			var $inner = document.getElementById('inner');
+			var $status = document.getElementById('status');
+
+			var colors = {
+				outter: '#ff0000',
+				middle: '#00ff00',
+				inner: '#0000ff'
+			};
+
+			var timeout = 0;
+			var step = 1000;
+
+			function updateStatus(currentTarget, target) {
+				$status.innerHTML +=
+					'<p>' +
+						'<i>e.currentTarget:</i>&nbsp;<b>' + currentTarget + '</b>&nbsp|&nbsp;' +
+						'<i>e.target:</i>&nbsp;<b>' + target + '</b>' +
+					'</p>';
+			}
+
+			function eventHandler(e) {
+				if ($stopPropagation.checked) {
+					e.stopPropagation();
+				}
+
+				setTimeout((function ($currentTarget, $target) {
+					return function () {
+						var currentTargetId = $currentTarget.getAttribute('id');
+						var targetId = $target.getAttribute('id');
+
+						$currentTarget.style.backgroundColor = colors[currentTargetId];
+
+						updateStatus(currentTargetId, targetId);
+					};
+				})(e.currentTarget, e.target), timeout);
+
+				timeout += step;
+
+				console.log(e.currentTarget, e.target)
+			}
+
+			$outter.addEventListener('click', eventHandler, USE_CAPTURE);
+
+			$middle.addEventListener('click', eventHandler, USE_CAPTURE);
+
+			$inner.addEventListener('click', eventHandler, USE_CAPTURE);
+		})();
+	</script>
+</body>
+</html>

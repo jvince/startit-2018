@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Custom Events</title>
+</head>
+<body>
+	<script id="movies-template" type="x-tmpl-mustache">
+		{{#movies}}
+			<div class="movie">
+				<img src="{{posterUrl}}" alt="poster" />
+				<h2>{{title}}</h2>
+				<div data-movie-id="{{id}}></div>
+			</div>
+		{{/movies}}
+	</script>
+
+	<ul id="movies">
+
+	</ul>
+
+	<script src="https://unpkg.com/mustache@2.3.0/mustache.min.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script>
+		;(function () {
+			var moviesTpl = document.getElementById('movies-template').innerHTML;
+			var $movies = document.getElementById('movies');
+
+			document.body.addEventListener('movies:loaded', function (e) {
+				console.log(e);
+			});
+
+			$movies.addEventListener('movies:loaded', function (e) {
+				var movies = e.detail.movies;
+
+				this.innerHTML = Mustache.render(moviesTpl, {
+					movies: movies
+				});
+			});
+
+			axios.get('db.json')
+			.then(function (response) {
+				var event = new CustomEvent('movies:loaded', {
+					detail: {
+						movies: response.data.movies.slice(0, 10)
+					},
+					bubbles: true,
+					cancelable: false
+				});
+
+				$movies.dispatchEvent(event);
+			});
+		})();
+	</script>
+</body>
+</html>

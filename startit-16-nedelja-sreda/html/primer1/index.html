@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>jQuery Selektori</title>
+</head>
+
+<body>
+	<h1>jQuery Selektori</h1>
+	<p id="mark">Ovo je paragraf.</p>
+	<p class="other">Još jedan paragraf.</p>
+	<p class="other">Još jedan <span>paragraf</span></p>
+
+	<hr />
+
+	<input type="text" name="ime" placeholder="Ime" />
+
+	<hr />
+
+	<table border="1">
+		<thead>
+			<tr>
+				<th>No.</th>
+				<th>Name</th>
+				<th>Email</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td>Pera Peric</td>
+				<td>pera@mail.com</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>Zora Zoric</td>
+				<td>mira@mail.com</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>Mira Milic</td>
+				<td>mira@mail.com</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p>Paragraf</p>
+	<p>Paragraf</p>
+
+	<script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+	<script>
+		$(function () {
+			// ID
+			$('#mark').css('background-color', '#ffff00');
+
+			// Class
+			$('.other').css('background-color', '#ff00ff');
+
+			// Element
+			$('h1').css({
+				fontStyle: 'italic',
+				backgroundColor: '#00ff00'
+			});
+
+			// Attribute
+			$('input[type="text"]').css('background-color', 'orange');
+
+			// Custom
+			$('tr:odd').css('background-color', 'pink');
+			$('tr:even').css('background-color', 'yellow');
+
+			$('table ~ p:first').css({
+				color: '#fff',
+				background: 'darkblue'
+			});
+			$('table ~ p:last').css('background', 'lightblue');
+		});
+	</script>
+</body>
+</html>

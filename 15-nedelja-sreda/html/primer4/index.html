@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Location</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.0/normalize.css" />
+	<link rel="stylesheet" href="https://unpkg.com/picnic">
+	<style>
+		body {
+			font-family: 'Roboto';
+		}
+
+		.prop-name {
+			color: #43A047;
+			font-size: 24px;
+		}
+
+		.prop-value {
+			font-size: 20px;
+		}
+	</style>
+</head>
+<body>
+	<input class="button" id="get-location" type="button" value="Location" />
+	<input class="button" id="location-replace" type="button" value="Replace (https://www.google.com)" />
+	<input class="button" id="location-reload" type="button" value="Reload" />
+	<div id="location-info"></div>
+
+	<script id="list-item-template" type="x-tmpl-mustache">
+		<ul>
+			{{#properties}}
+			<li class="{{klass}}">
+				<span class="prop-name">{{prop}}</span>:&nbsp;&nbsp;<span class="prop-value">{{value}}</span>
+			</li>
+			{{/properties}}
+		</ul>
+	</script>
+
+	<script src="https://unpkg.com/mustache@2.3.0/mustache.min.js"></script>
+	<script>
+		;(function () {
+			var $locationInfo = document.getElementById('location-info');
+			var template = document.getElementById('list-item-template').innerHTML;
+
+			document.getElementById('location-replace')
+			.addEventListener('click', function () { location.replace('https://www.google.com'); });
+			document.getElementById('location-reload')
+			.addEventListener('click', function () { location.reload(); });
+
+			document.getElementById('get-location')
+			.addEventListener('click', function () {
+				var listData = { "properties": [] };
+
+				$locationInfo.value = '';
+
+				for (var prop in location) {
+					listData['properties'].push({
+						prop: prop,
+						value:
+							typeof(location[prop]) === 'string'
+							? location[prop]
+							: typeof(location[prop])
+					})
+				}
+				$locationInfo.innerHTML = Mustache.render(template, listData);
+			});
+		})();
+	</script>
+</body>
+</html>

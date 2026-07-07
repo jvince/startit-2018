@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>jQuery atributi i empty</title>
+</head>
+<body>
+	<input type="button" id="remove" value="Remove href" />
+	<input type="button" id="empty" value="Empty" />
+
+	<script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+	<script>
+		$(function () {
+			var links = [
+				'https://www.google.com',
+				'https://bing.com',
+				'https://duckduckgo.com/'
+			];
+
+			var $$ul = $('<ul />').addClass('links');
+
+			links.forEach(function (link) {
+				var $$link = $('<a></a>');
+				$$link.attr('href', link);
+				$$link.text(link);
+
+				$$ul.append(
+					$('<li />').append($$link)
+				);
+			});
+
+			$('body').append($$ul);
+
+			$('#remove').on('click', function () {
+				$('a').removeAttr('href');
+			});
+
+			$('#empty').on('click', function () {
+				$$ul.empty();
+			});
+		});
+	</script>
+</body>
+</html>

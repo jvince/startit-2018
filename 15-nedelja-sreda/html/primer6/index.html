@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Local Storage</title>
+	<link rel="stylesheet" href="https://unpkg.com/picnic">
+</head>
+<body>
+	<div id="message"></div>
+	<input id="name" type="text" />
+	<input class="button" id="store" type="button" value="Store" />
+	<input class="button warning"id="remove" type="button" value="Remove" />
+
+	<script>
+		if ('localStorage' in window) {
+			var KEY = 'name';
+
+			var name = localStorage.getItem(KEY);
+
+			if (name !== "null" && name.trim().length > 0) {
+				document.getElementById('message').innerHTML =
+					'Welcome back <strong>' + name + '</strong>';
+			}
+
+			document.getElementById('store')
+			.addEventListener('click', function () {
+				localStorage.setItem(
+					KEY,
+					document.getElementById('name').value
+				);
+			});
+
+			document.getElementById('remove')
+			.addEventListener('click', function () {
+				localStorage.removeItem(KEY);
+				location.reload();
+			});
+		}
+	</script>
+</body>
+</html>

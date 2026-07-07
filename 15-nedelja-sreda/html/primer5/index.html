@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Navigator - Geolocation</title>
+	<link rel="stylesheet" href="https://unpkg.com/picnic">
+</head>
+<body>
+	<a class="button" id="google-maps" href="" disabled>Maps</a>
+	<textarea id="coords" rows="10" disabled></textarea>
+
+	<script>
+		;(function () {
+			var googleMaps = 'https://www.google.com/maps/@{lat},{lng},15z'
+			var $link = document.getElementById('google-maps');
+			var $coords = document.getElementById('coords');
+
+			function updateLocation(position) {
+				var arr = [];
+				$coords.value = '';
+				for (var prop in position.coords) {
+					arr.push(prop + ':' + position.coords[prop]);
+				}
+				$coords.value = arr.join('\n');
+
+				$link.href =
+					googleMaps
+					.replace('{lat}', position.coords.latitude)
+					.replace('{lng}', position.coords.longitude);
+				$link.removeAttribute('disabled');
+			}
+
+			function error(positionError) {
+				$link.parentElement.removeChild($link);
+				$coords.value = positionError.message;
+			}
+
+			if ('geolocation' in navigator) {
+				// Geolokacija podržana
+				// navigator.geolocation.getCurrentPosition(updateLocation);
+				navigator.geolocation.watchPosition(updateLocation, error);
+			}
+			else {
+				// Nema podrške za geolokaciju
+			}
+		})();
+	</script>
+</body>
+</html>

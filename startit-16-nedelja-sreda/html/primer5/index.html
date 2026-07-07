@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>jQuery animacije</title>
+	<style>
+		body {
+			padding-bottom: 200px;
+		}
+		p {
+			padding: 10px 20px;
+			background: yellow;
+		}
+		.cube {
+			position: relative;
+			width: 100px;
+			height: 100px;
+			background: #9d7ede;
+			border: 2px solid #6f40ce;
+		}
+	</style>
+</head>
+<body>
+	<label for="duration">Duration(0.5-5): </label>
+	<input type="range" id="duration" step="0.1" min="0.5" max="5.0" value="1" />
+	<br />
+	<label for="opacity">Opacity(0-1): </label>
+	<input id="opacity" type="range" min="0" max="1.0" step="0.1" value="1" />
+	<hr />
+
+	<section id="section-1">
+		<h1>Fade</h1>
+		<input id="fade-in" type="button" value="Fade In">
+		<input id="fade-out" type="button" value="Fade Out">
+		<input id="fade-to" type="button" value="Fade">
+
+		<p>This is a paragraph.</p>
+		<p>This is another paragraph.</p>
+	</section>
+
+	<section id="section-2">
+		<h2>Slide</h2>
+		<input id="slide-up" type="button" value="Slide Up">
+		<input id="slide-down" type="button" value="Slide Down">
+		<input id="slide-toggle" type="button" value="Slide Toggle">
+
+		<p>This is a paragraph.</p>
+		<p>This is another paragraph.</p>
+	</section>
+
+
+	<section id="section-3">
+		<h2>Animacija</h2>
+		<input id="animate" type="button" value="Animate">
+
+		<div class="cube"></div>
+	</section>
+
+	<section id="section-4">
+		<h2>Animacija redosledno</h2>
+		<input id="animate-queued" type="button" value="Animate">
+
+		<div class="cube"></div>
+	</section>
+
+	<section id="section-5">
+		<h2>Animacija relativne vrednosti</h2>
+		<input id="animate-relative" type="button" value="Animate">
+
+		<div class="cube"></div>
+	</section>
+
+	<script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+	<script>
+		$(function () {
+			var $$duration = $('#duration');
+			var $$opacity = $('#opacity');
+
+			$('#fade-in').on('click', function () {
+				$('#section-1 p').fadeIn();
+			});
+
+			$('#fade-out').on('click', function () {
+				$('#section-1 p').fadeOut();
+			});
+
+			$('#fade-to').on('click', function () {
+				$('#section-1 p').fadeTo($$duration.val() * 1000, $$opacity.val());
+			});
+
+			$('#slide-up').on('click', function () {
+				$('#section-2 p').slideUp();
+			});
+
+			$('#slide-down').on('click', function () {
+				$('#section-2 p').slideDown();
+			});
+
+			$('#slide-toggle').on('click', function () {
+				$('#section-2 p').slideToggle();
+			});
+
+			$('#animate').on('click', function () {
+				$('#section-3 .cube').animate({
+					width: '300px',
+					height: '300px',
+					opacity: 0.5
+				});
+			});
+
+			$('#animate-queued').on('click', function () {
+				$('#section-4 .cube')
+					.animate({ width: '300px' })
+					.animate({ height: '300px' })
+					.animate({ opacity: 0.5 });
+			});
+
+			$('#animate-relative').on('click', function () {
+				var $$cube = $('#section-5 .cube');
+
+				$$cube
+					.animate({ left: '50%' }, 1000)
+					.animate({ left: '-=' + ($$cube.width() / 2) + 'px' })
+					.animate({
+						left: '-=100px',
+						width: '+=200px',
+						height: '300px'
+					}, function () { console.log('complete') });
+			});
+
+		});
+	</script>
+</body>
+</html>

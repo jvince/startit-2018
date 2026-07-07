@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Movie DB</title>
+</head>
+<body>
+	<script id="genres-template" type="x-tmpl-mustache">
+		{{#genres}}
+			<li class="link"><a href="#!{{.}}">{{.}}</a></li>
+		{{/genres}}
+	</script>
+
+	<script id="movies-template" type="x-tmpl-mustache">
+		{{#movies}}
+			<div class="movie">
+				<img src="{{poster}}" alt="poster" />
+				<h2>{{title}}</h2>
+			</div>
+		{{/movies}}
+	</script>
+
+	<ul id="genres"></ul>
+	<div id="movies"></div>
+
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://unpkg.com/mustache@2.3.0/mustache.min.js"></script>
+	<script src="index.js"></script>
+	<script>
+		App.start();
+	</script>
+</body>
+</html>

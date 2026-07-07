@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>jQuery kreiranje, umetanje, klase, sakrivanje</title>
+	<style>
+		.cube {
+			width: 120px;
+			height: 120px;
+		}
+		.first {
+			background-color: #ff0000;
+		}
+		.before {
+			background-color: #00ff00;
+		}
+		.after {
+			background-color: #0000ff;
+		}
+		.highlight {
+			background-color: yellow;
+		}
+		.fixed {
+			position: fixed;
+			right: 0;
+			bottom: 0;
+		}
+	</style>
+</head>
+	<input id="append" type="button" value="Append" />
+	<input id="prepend" type="button" value="Prepend" />
+	<input id="before" type="button" value="Before" />
+	<input id="after" type="button" value="After" />
+	<input id="show" type="button" value="Show" />
+	<input id="hide" type="button" value="Hide" />
+	<hr />
+	<div class="cube first"></div>
+	<p>Paragraf</p>
+	<p>Paragraf</p>
+
+	<div class="fixed">
+
+	</div>
+<body>
+	<script src="https://unpkg.com/jquery@3.3.1/dist/jquery.min.js"></script>
+	<script>
+		$(function () {
+			var $$p = $('p');
+			var $$first = $('.cube');
+
+			$('#append').on('click', function () {
+				$$p.append('<span>Append</span>');
+			});
+
+			$('#prepend').on('click', function () {
+				var $$span = $('<span />');
+				// $$span.html('Prepend');
+				$$span.text('Prepend');
+				$$p.prepend($$span);
+			});
+
+			$('#before').on('click', function () {
+				var $$cube = $('<div class="cube before"></div>');
+				$$first.before($$cube);
+				// $$cube.insertBefore($$first);
+			});
+
+			$('#after').on('click', function () {
+				var $$cube = $('<div />', {
+					class: 'cube after',
+					attr: {
+						'data-cube': 'after'
+					}
+				});
+
+				$$first.after($$cube);
+				// $$cube.insertAfter($$first);
+			});
+
+			$('#show').on('click', function () {
+				$$first.show();
+			})
+
+			$('#hide').on('click', function () {
+				$$first.hide();
+			});
+
+			$('p').on('click', function (e) {
+				var $$target = $(this);
+
+				if ($$target.hasClass('highlight')) {
+					$$target.removeClass('highlight');
+				}
+				else {
+					$$target.addClass('highlight');
+				}
+				// $$target.toggleClass('highlight');
+			});
+
+			// Delegirani event
+			$('body').on('dblclick', '.before, .after', function () {
+				$(this).remove();
+			});
+		});
+	</script>
+</body>
+</html>

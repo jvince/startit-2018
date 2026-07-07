@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Delegation</title>
+
+	<style>
+		article {
+			box-sizing: border-box;
+			float: left;
+			width: 240px;
+			margin-right: 10px;
+			padding: 10px 20px;
+			border: 1px solid #ccc;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<article data-delegated>
+		<h1>Title 1</h1>
+		<p>Body 2</p>
+	</article>
+
+	<article>
+		<h1>Title 2</h1>
+		<p>Body 2</p>
+	</article>
+
+	<article>
+		<h1>Title 3</h1>
+		<p>Body 3</p>
+	</article>
+
+	<article data-delegated>
+		<h1>Title 3</h1>
+		<p>Body 3</p>
+	</article>
+
+	<script>
+		;(function () {
+			document.body.addEventListener('click', function (e) {
+				var target = e.target;
+				var delegated = null;
+
+				while (target !== null) {
+					if (
+						// 'getAttribute' in target &&
+						target instanceof Element &&
+						target.getAttribute('data-delegated') !== null
+					) {
+						delegated = target.getAttribute('data-delegated');
+						break;
+					}
+
+					target = target.parentNode;
+				}
+
+				if (delegated !== null) {
+					alert('OK! You can click on this item.');
+				}
+			})
+		})();
+	</script>
+</body>
+</html>

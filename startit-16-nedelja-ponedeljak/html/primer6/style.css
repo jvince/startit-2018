@@ -1,0 +1,35 @@
+.card {
+	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dragging {
+	opacity: 0.5;
+}
+
+.movie-card {
+	position: relative;
+	width: 200px;
+	height: 334px;
+	cursor: move;
+}
+
+.movie-card-inner {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+}
+
+.details-card {
+	position: relative;
+	width: 480px;
+	height: 480px;
+}
+
+.details-card-target {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
